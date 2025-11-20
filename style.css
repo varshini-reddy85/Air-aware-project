@@ -1,0 +1,108 @@
+.container {
+    width: 60%;   
+    margin: auto;
+    margin-top: 40px;
+    transform: scale(0.85); 
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-image: url('https://i.ytimg.com/vi/n2ZfESR-WBs/maxresdefault.jpg');
+    background-size: cover;
+    background-position: center;
+    backdrop-filter: blur(4px);
+    color: white;
+}
+#mainTitle {
+    font-family: 'Great Vibes', cursive;
+    font-size: 50px;
+    font-weight: normal;
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background: transparent
+}
+
+.nav-links a {
+    margin-left: 20px;
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.top-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aqi-box {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 25px 60px;
+    border-radius: 20px;        /* Less round, more rectangle */
+    text-align: center;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);  /* Soft glow */
+}
+.card {
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    background: rgba(255,255,255,0.25);
+}
+
+
+
+.card-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.card {
+    background: rgba(255,255,255,0.20);
+    width: 14%;                 
+    padding: 10px 0;            
+    border-radius: 14px;
+    text-align: center;
+    backdrop-filter: blur(6px);
+}
+
+.card h3 {
+    font-size: 14px;            /* smaller title */
+}
+
+.card p {
+    font-size: 18px;            /* smaller value */
+    font-weight: bold;
+}
+
+
+
+
+.graph-card {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(0,0,0,0.4);
+    border-radius: 12px;
+}
+select {
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+}
+

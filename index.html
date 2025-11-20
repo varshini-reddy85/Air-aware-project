@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AirAware - Air Quality Prediction System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1 id = "maintitle">AirAware - Air Quality Prediction System</h2>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Past AQI</a>
+            <a href="#">Future AQI</a>
+            <a href="#">Menu</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="top-section">
+            <div>
+                <label>Select City:</label>
+                <select id="citySelect">
+                    <option>Vijayawada</option>
+                    <option>Visakhapatnam</option>
+                    <option>Guntur</option>
+                    <option>Nellore</option>
+                    <option>Tirupati</option>
+                    <option>Kurnool</option>
+                    <option>Rajahmundry</option>
+                </select>
+            </div>
+
+            <div class="aqi-box">
+                <h1 id="aqiValue">132</h1>
+                <p id="aqiStatus">Unhealthy</p>
+            </div>
+        </div>
+
+        <div class="card-row">
+            <div class="card">
+                <h3>PM2.5</h3>
+                <p id="pm25Value">78</p>
+            </div>
+
+            <div class="card">
+                <h3>NO₂</h3>
+                <p id="no2Value">54</p>
+            </div>
+
+            <div class="card">
+                <h3>PM10</h3>
+                <p id="pm10Value">112</p>
+            </div>
+
+            <div class="card">
+                <h3>CO</h3>
+                <p id="coValue">1.2</p>
+            </div>
+        </div>
+
+        <div class="graph-card">
+            <h3>AQI Trend 🌥️</h3>
+            <canvas id="aqiChart"></canvas>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
