@@ -1,72 +1,145 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>AirAware - Air Quality Prediction System</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AirAware — Dashboard (Exact Layout A)</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js v3 (required for semicircle doughnut) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
 </head>
+<body id="pageBody">
 
-<body>
-    <div class="navbar">
-        <h1 id = "maintitle">AirAware - Air Quality Prediction System</h2>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#">Past AQI</a>
-            <a href="#">Future AQI</a>
-            <a href="#">Menu</a>
-        </div>
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">💨</div>
+      <div class="brand-text">
+        <div class="title">AirAware</div>
+        <div class="subtitle">Smart Air Quality Prediction System</div>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="top-section">
-            <div>
-                <label>Select City:</label>
-                <select id="citySelect">
-                    <option>Vijayawada</option>
-                    <option>Visakhapatnam</option>
-                    <option>Guntur</option>
-                    <option>Nellore</option>
-                    <option>Tirupati</option>
-                    <option>Kurnool</option>
-                    <option>Rajahmundry</option>
-                </select>
-            </div>
+    <nav class="topnav">
+      <a class="nav-link active" href="#home">Home</a>
+      <a class="nav-link" href="#current">Past AQI</a>
+      <a class="nav-link" href="#future">Future AQI</a>
+      <a class="nav-link" href="#about">About</a>
+    </nav>
+  </header>
 
-            <div class="aqi-box">
-                <h1 id="aqiValue">132</h1>
-                <p id="aqiStatus">Unhealthy</p>
-            </div>
+  <!-- MAIN PAGE -->
+  <main class="page" id="home">
+
+    <!-- Controls -->
+    <section class="controls">
+      <div class="select-wrap">
+        <label class="lbl">Select Your City</label>
+        <select id="citySelect">
+          <option>Vijayawada</option>
+          <option>Visakhapatnam</option>
+          <option>Tirupati</option>
+          <option>Guntur</option>
+          <option>Kakinada</option>
+          <option>Nellore</option>
+          <option>Rajahmundry</option>
+          <option>Kadapa</option>
+        </select>
+      </div>
+
+      <button id="showBtn" class="btn primary">Show AQI</button>
+    </section>
+
+    <!-- Dashboard Grid -->
+    <section class="dashboard-grid">
+
+      <!-- LEFT: Gauge + small box -->
+      <div class="card gauge-card" id="current">
+        <div class="gauge-wrap">
+          <!-- fixed canvas size to ensure perfect semicircle -->
+          <canvas id="gaugeCanvas" width="420" height="240"></canvas>
+          <div class="gauge-center">
+            <div id="aqiNumber" class="aqi-number">--</div>
+            <div id="aqiCategory" class="aqi-category">--</div>
+            <div id="aqiEmoji" class="aqi-emoji">😐</div>
+          </div>
         </div>
 
-        <div class="card-row">
-            <div class="card">
-                <h3>PM2.5</h3>
-                <p id="pm25Value">78</p>
-            </div>
+        <!-- PE10 stays small decorative box -->
+        <div class="small-chart">
+          <div class="small-title">PE 10 stays</div>
+          <div class="bars">
+            <div class="bar" style="height:46%"></div>
+            <div class="bar" style="height:56%"></div>
+            <div class="bar" style="height:52%"></div>
+            <div class="bar" style="height:60%"></div>
+          </div>
+          <div class="small-note">62.4 &nbsp; 61.0 &nbsp; 63.0 &nbsp; 68.0</div>
+        </div>
+      </div>
 
-            <div class="card">
-                <h3>NO₂</h3>
-                <p id="no2Value">54</p>
-            </div>
+      <!-- MIDDLE: pollutant cards + trend -->
+      <div class="middle-col">
 
-            <div class="card">
-                <h3>PM10</h3>
-                <p id="pm10Value">112</p>
-            </div>
-
-            <div class="card">
-                <h3>CO</h3>
-                <p id="coValue">1.2</p>
-            </div>
+        <div class="pollution-row">
+          <div class="metric-card">
+            <div class="metric-title">PM2.5</div>
+            <div id="valPM25" class="metric-value">--</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">PM10</div>
+            <div id="valPM10" class="metric-value">--</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">NO₂</div>
+            <div id="valNO2" class="metric-value">--</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">CO</div>
+            <div id="valCO" class="metric-value">--</div>
+          </div>
         </div>
 
-        <div class="graph-card">
-            <h3>AQI Trend 🌥️</h3>
-            <canvas id="aqiChart"></canvas>
+        <div class="card trend-card">
+          <div class="card-title">AQI Trend</div>
+          <canvas id="trendCanvas" height="170"></canvas>
+          <div class="predict-button-wrap">
+            <button class="btn primary" id="predictBtn">Predict Air Quality</button>
+          </div>
         </div>
-    </div>
+      </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="script.js"></script>
+      <!-- RIGHT: Predict / Info panel -->
+      <aside class="side-col">
+        <div class="card predict-card">
+          <div class="card-title">Predict AQI</div>
+          <div class="muted">(Demo UI — values are simulated)</div>
+
+          <div class="input-row">
+            <input placeholder="PM2.5" id="inpPM25" />
+            <input placeholder="PM10" id="inpPM10" />
+            <input placeholder="NO₂" id="inpNO2" />
+            <input placeholder="CO" id="inpCO" />
+          </div>
+
+          <div class="pred-result">
+            <div class="pred-number" id="predVal">—</div>
+            <div id="predLabel" class="pred-label">—</div>
+          </div>
+        </div>
+      </aside>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">© AirAware — Demo UI</footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
