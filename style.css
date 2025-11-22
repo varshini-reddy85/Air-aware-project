@@ -1,108 +1,163 @@
-.container {
-    width: 60%;   
-    margin: auto;
-    margin-top: 40px;
-    transform: scale(0.85); 
+/* style.css - Exact Layout A (polished dashboard) */
+:root{
+  --navy-1:#0b2a4a;
+  --navy-2:#0b2540;
+  --accent:#5fc7ff;
+  --glass:rgba(255,255,255,0.03);
+  --muted:rgba(255,255,255,0.78);
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-image: url('https://i.ytimg.com/vi/n2ZfESR-WBs/maxresdefault.jpg');
-    background-size: cover;
-    background-position: center;
-    backdrop-filter: blur(4px);
-    color: white;
-}
-#mainTitle {
-    font-family: 'Great Vibes', cursive;
-    font-size: 50px;
-    font-weight: normal;
-}
-
-
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px 30px;
-    background: transparent
+/* global */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  color:#eaf6ff;
+  /* YOUR uploaded background image path (keeps the same look under overlay) */
+  background-image: url('http://www.pixelstalk.net/wp-content/uploads/2016/06/Blue-light-in-space-star-abstract-1920x1080-wallpapers.jpg');
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
 }
 
-.nav-links a {
-    margin-left: 20px;
-    color: white;
-    text-decoration: none;
+/* dark overlay to reproduce the exact navy card contrast */
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  background: linear-gradient(180deg, rgba(6,12,25,0.82), rgba(8,20,40,0.86));
+  pointer-events:none;
+  z-index:0;
 }
 
-.container {
-    width: 80%;
-    margin: auto;
-    margin-top: 40px;
+/* topbar */
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:28px 56px;
+  z-index:2;
+  position:relative;
+}
+.brand{display:flex; gap:14px; align-items:center}
+.logo{font-size:34px}
+.brand-text .title{font-size:28px; font-weight:700}
+.brand-text .subtitle{font-size:13px; color:var(--muted); margin-top:4px}
+
+/* nav */
+.topnav{display:flex; gap:28px; align-items:center; z-index:2}
+.topnav .nav-link{
+  color:var(--muted);
+  text-decoration:none;
+  padding:8px 10px;
+  border-radius:8px;
+  position:relative;
+  transition: transform .18s ease, color .18s ease;
+  cursor:pointer;
+}
+.topnav .nav-link::after{
+  content:"";
+  position:absolute;
+  left:12%;
+  right:12%;
+  bottom:-8px;
+  height:3px;
+  background: linear-gradient(90deg,var(--accent), #8ef0b8);
+  transform: scaleX(0);
+  transform-origin:left center;
+  transition: transform .22s ease;
+  border-radius:3px;
+}
+.topnav .nav-link:hover{
+  transform: translateY(-3px) scale(1.02);
+  color:#fff;
+}
+.topnav .nav-link:hover::after{ transform: scaleX(1); }
+
+/* page wrapper */
+.page{position:relative; z-index:2; padding: 18px 56px 60px}
+
+/* controls */
+.controls{ display:flex; justify-content:space-between; align-items:center; gap:16px; margin-top:6px; margin-bottom:18px }
+.select-wrap{ background: rgba(255,255,255,0.02); padding:16px 18px; border-radius:12px; display:flex; align-items:center; gap:18px }
+.select-wrap .lbl{ font-weight:600; color:var(--muted) }
+.select-wrap select{ background: rgba(255,255,255,0.03); color:#3890d8; border:1px solid rgba(255,255,255,0.03); padding:10px 14px; border-radius:8px; font-size:16px }
+
+/* button */
+.btn{ padding:12px 20px; border-radius:12px; border:none; cursor:pointer; font-weight:700 }
+.btn.primary{ background: linear-gradient(180deg,#6ed0e8,#49a9c8); color:#012027; box-shadow: 0 6px 22px rgba(54,137,178,0.12); transition: transform .16s ease, box-shadow .16s ease }
+.btn.primary:hover{ transform: translateY(-3px) }
+
+/* grid layout */
+.dashboard-grid{ display:grid; grid-template-columns:420px 1fr 300px; gap:22px; z-index:2 }
+
+/* card base */
+.card{
+  background: linear-gradient(180deg, rgba(13,40,74,0.94), rgba(10,28,50,0.94));
+  border-radius:14px;
+  padding:18px;
+  box-shadow: 0 10px 30px rgba(2,8,20,0.5);
 }
 
-.top-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* gauge card */
+.gauge-card{ padding:30px; display:flex; flex-direction:column; gap:18px; align-items:center; min-height:440px }
+.gauge-wrap{ position:relative; width:420px; height:240px }
+#gaugeCanvas{ width:100% !important; height:100% !important; display:block; }
+.gauge-center{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; pointer-events:none }
+.aqi-number{ font-size:56px; font-weight:800 }
+.aqi-category{ font-size:18px; margin-top:8px; color:rgba(255,255,255,0.9) }
+.aqi-emoji{ margin-top:12px; font-size:26px }
+
+/* small-chart (PE10) */
+.small-chart{ width:100%; margin-top:8px; background: rgba(255,255,255,0.02); padding:12px; border-radius:10px }
+.small-title{ color:var(--muted); font-weight:600; margin-bottom:8px }
+.bars{ display:flex; gap:12px; align-items:flex-end }
+.bars .bar{ width:24px; background:linear-gradient(180deg,#335e6f,#2a4b56); border-radius:4px }
+
+/* middle column */
+.middle-col{ display:flex; flex-direction:column; gap:12px }
+
+/* pollutant row */
+.pollution-row{ display:flex; gap:12px }
+.metric-card{ flex:1; background: rgba(255,255,255,0.02); border-radius:10px; padding:18px; text-align:center; transition: transform .18s ease }
+.metric-card:hover{ transform: translateY(-6px) }
+.metric-title{ color:var(--muted); margin-bottom:8px }
+.metric-value{ font-size:28px; font-weight:800 }
+
+/* trend card */
+.trend-card{ padding:18px; height:260px; display:flex; flex-direction:column; justify-content:space-between }
+.card-title{ font-weight:700; margin-bottom:10px }
+.predict-button-wrap{ margin-top:8px; }
+
+/* side column */
+.side-col{ display:flex; flex-direction:column; gap:12px }
+.predict-card input{ width:100%; padding:12px; margin-top:10px; border-radius:8px; border:none; background: rgba(255,255,255,0.03); color:#eaf6ff }
+
+/* prediction result */
+.pred-result{ display:flex; align-items:center; gap:12px; margin-top:14px; justify-content:flex-start }
+.pred-number{ font-size:32px; font-weight:800 }
+.pred-label{ color:var(--muted) }
+
+/* footer */
+.footer{ padding:28px 56px; color:rgba(255,255,255,0.6) ; z-index:2 }
+
+/* flash overlay classes (apply to body) */
+.flash-red::after, .flash-yellow::after{
+  content:"";
+  position:fixed; inset:0; z-index:1000; pointer-events:none;
+  animation: flashFade 1.9s ease forwards;
 }
+.flash-red::after{ background: linear-gradient(180deg, rgba(255,20,20,0.14), rgba(255,10,10,0.06)); }
+.flash-yellow::after{ background: linear-gradient(180deg, rgba(255,230,120,0.10), rgba(255,200,80,0.03)); }
+@keyframes flashFade{ 0%{opacity:1} 100%{opacity:0} }
 
-.aqi-box {
-    background: rgba(255, 255, 255, 0.18);
-    padding: 25px 60px;
-    border-radius: 20px;        /* Less round, more rectangle */
-    text-align: center;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.15);  /* Soft glow */
+/* nav active small visual */
+.topnav .nav-link.active{ color:#fff }
+
+/* responsive */
+@media (max-width:1100px){
+  .dashboard-grid{ grid-template-columns: 1fr; padding:0; }
+  .gauge-wrap{ width:320px; height:170px }
+  .topbar{ padding:16px 20px }
 }
-.card {
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    background: rgba(255,255,255,0.25);
-}
-
-
-
-.card-row {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
-}
-
-.card {
-    background: rgba(255,255,255,0.20);
-    width: 14%;                 
-    padding: 10px 0;            
-    border-radius: 14px;
-    text-align: center;
-    backdrop-filter: blur(6px);
-}
-
-.card h3 {
-    font-size: 14px;            /* smaller title */
-}
-
-.card p {
-    font-size: 18px;            /* smaller value */
-    font-weight: bold;
-}
-
-
-
-
-.graph-card {
-    margin-top: 40px;
-    padding: 20px;
-    background: rgba(0,0,0,0.4);
-    border-radius: 12px;
-}
-select {
-    padding: 10px 15px;
-    font-size: 18px;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
